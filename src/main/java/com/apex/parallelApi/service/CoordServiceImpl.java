@@ -11,6 +11,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -26,7 +27,6 @@ public class CoordServiceImpl implements CoordService {
     public List<Coord> getAllCoord() {
         return coordRepo.findAll();
     }
-
 
     @Override
     @Async

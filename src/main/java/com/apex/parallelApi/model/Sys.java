@@ -2,12 +2,19 @@ package com.apex.parallelApi.model;
 
 import lombok.Data;
 
-@Data
-public class Sys {
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
-    public int id;
-    public int type;
+@Data
+@Entity
+public class Sys {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Long id;
+    public Long type;
     public String country;
-    public int sunrise;
-    public int sunset;
+    public Long sunrise;
+    public Long sunset;
 }
