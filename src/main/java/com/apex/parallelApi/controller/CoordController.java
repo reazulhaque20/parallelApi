@@ -1,7 +1,6 @@
 package com.apex.parallelApi.controller;
 
 import com.apex.parallelApi.model.Coord;
-import com.apex.parallelApi.model.Country;
 import com.apex.parallelApi.model.Root;
 import com.apex.parallelApi.service.CoordService;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +30,9 @@ public class CoordController {
     public void getWeatherdata(){
         List<Coord> coordList = coordService.getAllCoord();
         CompletableFuture<Root> completableFuture = null;
+        List<Root> rootList = new ArrayList<>();
         for (Coord coord : coordList) {
-                completableFuture = coordService.getWeatherByLatLon(coord.getLat(), coord.getLon());
+            rootList = coordService.getWeatherByLatLon(coord.getLat(), coord.getLon());
             }
 
         List<String> allData;

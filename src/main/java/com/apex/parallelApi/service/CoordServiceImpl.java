@@ -1,9 +1,11 @@
 package com.apex.parallelApi.service;
 
+import com.apex.parallelApi.model.Cloud;
 import com.apex.parallelApi.model.Coord;
-import com.apex.parallelApi.model.Country;
 import com.apex.parallelApi.model.Root;
+import com.apex.parallelApi.repository.CloudRepo;
 import com.apex.parallelApi.repository.CoordRepo;
+import com.apex.parallelApi.repository.RootRepo;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,21 +23,25 @@ import java.util.concurrent.CompletableFuture;
 public class CoordServiceImpl implements CoordService {
 
     private final CoordRepo coordRepo;
+    private final RootRepo rootRepo;
+    private final CloudRepo cloudRepo;
     RestTemplate restTemplate = new RestTemplate();
     private static final Logger logger = LogManager.getLogger(CoordServiceImpl.class);
     @Override
     public List<Coord> getAllCoord() {
         return coordRepo.findAll();
     }
-
+    List<Root> rootList = new ArrayList<>();
     @Override
     @Async
-    public CompletableFuture<Root> getWeatherByLatLon(String lat, String lon) {
+    public List<Root> getWeatherByLatLon(String lat, String lon) {
+        List<Root> rootList = new ArrayList<>();
         logger.info("Get Weather Service Data......");
         String url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon +"&appid=892a3cc7296959eb9b022b411d643960&units=metric";
         logger.info("Get Weather Service URL: " + url);
         Root response = restTemplate.getForObject(url, Root.class);
         logger.info("Received Weather Service Response: " + response);
-        return CompletableFuture.completedFuture((response));
+        cloudRepo.save(response.getClouds());
+        return rootList;
     }
 }

@@ -8,5 +8,5 @@ import java.util.concurrent.CompletableFuture;
 
 public interface CoordService {
     List<Coord> getAllCoord();
-    CompletableFuture<Root> getWeatherByLatLon(String lat, String lon);
+    List<Root> getWeatherByLatLon(String lat, String lon);
 }

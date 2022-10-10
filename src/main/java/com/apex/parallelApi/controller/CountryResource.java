@@ -29,15 +29,15 @@ public class CountryResource {
     @GetMapping("/getAllCountry")
     public List<String> getAllEuropeanFrenchSpeakingCountries() throws Throwable {
         LOGGER.info("Get All Country List API.");
-        CompletableFuture<List<Country>> countriesByLanguageFuture = countryClient.getCountriesByLanguage("spa");
-        LOGGER.info("Country By Language: " + countriesByLanguageFuture);
-        CompletableFuture<List<Country>> countriesByRegionFuture = countryClient.getCountriesByRegion("europe");
-        LOGGER.info("Country By Region: " + countriesByRegionFuture);
-        List<String> europeanFrenchSpeakingCountries;
+//        CompletableFuture<List<Country>> countriesByLanguageFuture = countryClient.getCountriesByLanguage("spa");
+//        LOGGER.info("Country By Language: " + countriesByLanguageFuture);
+//        CompletableFuture<List<Country>> countriesByRegionFuture = countryClient.getCountriesByRegion("europe");
+//        LOGGER.info("Country By Region: " + countriesByRegionFuture);
+        List<String> europeanFrenchSpeakingCountries = null;
 //        CompletableFuture.allOf(allFutures.toArray(new CompletableFuture[0])).join();
         try {
-            europeanFrenchSpeakingCountries = new ArrayList<>(countriesByLanguageFuture.get().stream().map(Country::getName).collect(Collectors.toList()));
-            europeanFrenchSpeakingCountries.addAll(countriesByRegionFuture.get().stream().map(Country::getName).collect(Collectors.toList()));
+//            europeanFrenchSpeakingCountries = new ArrayList<>(countriesByLanguageFuture.get().stream().map(Country::getName).collect(Collectors.toList()));
+//            europeanFrenchSpeakingCountries.addAll(countriesByRegionFuture.get().stream().map(Country::getName).collect(Collectors.toList()));
         } catch (Throwable e) {
             throw e.getCause();
         }
