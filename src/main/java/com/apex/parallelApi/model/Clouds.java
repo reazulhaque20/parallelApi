@@ -6,12 +6,10 @@ import javax.persistence.*;
 
 @Data
 @Entity
-public class Wind {
+public class Clouds {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id", nullable = false)
     private Long id;
-
-    private double speed;
-    private long deg;
+    private long all;
 }
