@@ -16,4 +16,6 @@ public class Weather {
     private String main;
     private String description;
     private String icon;
+    private double lat;
+    private double lon;
 }

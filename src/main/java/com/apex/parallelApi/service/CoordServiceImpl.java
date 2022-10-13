@@ -24,7 +24,7 @@ public class CoordServiceImpl implements CoordService {
     private final WeatherRepo weatherRepo;
     private final SysRepo sysRepo;
     private final WindRepo windRepo;
-    RestTemplate restTemplate = new RestTemplate();
+
     private static final Logger logger = LogManager.getLogger(CoordServiceImpl.class);
     @Override
     public List<Coord> getAllCoord() {
@@ -32,22 +32,33 @@ public class CoordServiceImpl implements CoordService {
     }
     List<Root> rootList = new ArrayList<>();
     @Override
-    @Async
+//    @Async
     public CompletableFuture<String> getWeatherByLatLon(double lat, double lon) {
+        RestTemplate restTemplate = new RestTemplate();
         List<Root> rootList = new ArrayList<>();
         logger.info("Get Weather Service Data......");
         String url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon +"&appid=892a3cc7296959eb9b022b411d643960&units=metric";
         logger.info("Get Weather Service URL: " + url);
         Root response = restTemplate.getForObject(url, Root.class);
         logger.info("Received Weather Service Response: " + response);
-//        cloudRepo.save(response.getClouds());
-        mainRepo.save(response.getMain());
+        Main main = response.getMain();
+        main.setLat(lat);
+        main.setLon(lon);
+        mainRepo.save(main);
 //        cloudsRepo.save(response.getClouds());
         for(Weather w : response.getWeather()) {
+            w.setLat(lat);
+            w.setLon(lon);
             weatherRepo.save(w);
         }
-        sysRepo.save(response.getSys());
-        windRepo.save(response.getWind());
+        Sys sys = response.getSys();
+        sys.setLat(lat);
+        sys.setLon(lon);
+        sysRepo.save(sys);
+        Wind wind = response.getWind();
+        wind.setLat(lat);
+        wind.setLon(lon);
+        windRepo.save(wind);
         return CompletableFuture.completedFuture("");
     }
 }

@@ -14,4 +14,6 @@ public class Wind {
 
     private double speed;
     private long deg;
+    private double lat;
+    private double lon;
 }

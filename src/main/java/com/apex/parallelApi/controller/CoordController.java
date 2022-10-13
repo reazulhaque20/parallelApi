@@ -3,9 +3,14 @@ package com.apex.parallelApi.controller;
 import com.apex.parallelApi.model.Coord;
 import com.apex.parallelApi.model.Root;
 import com.apex.parallelApi.service.CoordService;
+import com.apex.parallelApi.service.CoordServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,16 +22,18 @@ import java.util.concurrent.CompletableFuture;
 @RestController
 @RequestMapping("api/weather")
 @RequiredArgsConstructor
+@EnableScheduling
 public class CoordController {
 
     private final CoordService coordService;
-
+    private static final Logger logger = LogManager.getLogger(CoordController.class);
     @GetMapping("/allCoord")
     public List<Coord> getAllCoord(){
         return coordService.getAllCoord();
     }
     
     @GetMapping("/getWeatherData")
+    @Scheduled(fixedRate = 2000)
     public void getWeatherdata() throws JSONException {
         List<Coord> coordList = coordService.getAllCoord();
 //        CompletableFuture<Root> completableFuture = null;
@@ -35,18 +42,12 @@ public class CoordController {
         String response = "";
         CompletableFuture<String> completableFuture = null;
         try {
-
-            for (Coord coord : coordList) {
-                completableFuture = coordService.getWeatherByLatLon(coord.getLat(), coord.getLon());
-                rootList.add(root);
-            }
+                for (Coord coord : coordList) {
+                    completableFuture = coordService.getWeatherByLatLon(coord.getLat(), coord.getLon());
+                    rootList.add(root);
+                }
         }catch(Exception exception){
-            System.out.println("Error");
+            logger.error("Error: " + exception);
         }
-
-        List<String> allData;
-        System.out.println("Root List: " + rootList);
-
-        JSONObject jsonObject = new JSONObject(response);
     }
 }

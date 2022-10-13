@@ -18,6 +18,7 @@ public class Main {
     private double temp_max;
     private long pressure;
     private long humidity;
-
+    private double lon;
+    private double lat;
 
 }

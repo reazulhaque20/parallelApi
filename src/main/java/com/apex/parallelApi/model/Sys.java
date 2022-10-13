@@ -16,4 +16,6 @@ public class Sys {
     private String country;
     private long sunrise;
     private long sunset;
+    private double lat;
+    private double lon;
 }
