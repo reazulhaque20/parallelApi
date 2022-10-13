@@ -32,7 +32,7 @@ public class CoordServiceImpl implements CoordService {
     }
     List<Root> rootList = new ArrayList<>();
     @Override
-//    @Async
+    @Async
     public CompletableFuture<String> getWeatherByLatLon(double lat, double lon) {
         RestTemplate restTemplate = new RestTemplate();
         List<Root> rootList = new ArrayList<>();

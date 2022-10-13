@@ -3,12 +3,11 @@ package com.apex.parallelApi.controller;
 import com.apex.parallelApi.model.Coord;
 import com.apex.parallelApi.model.Root;
 import com.apex.parallelApi.service.CoordService;
-import com.apex.parallelApi.service.CoordServiceImpl;
+
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.configurationprocessor.json.JSONException;
-import org.springframework.boot.configurationprocessor.json.JSONObject;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +35,6 @@ public class CoordController {
     @Scheduled(fixedRate = 2000)
     public void getWeatherdata() throws JSONException {
         List<Coord> coordList = coordService.getAllCoord();
-//        CompletableFuture<Root> completableFuture = null;
         List<Root> rootList = new ArrayList<>();
         Root root = new Root();
         String response = "";
