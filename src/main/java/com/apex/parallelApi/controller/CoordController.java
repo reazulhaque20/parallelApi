@@ -20,11 +20,13 @@ import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("api/weather")
-@RequiredArgsConstructor
+
 @EnableScheduling
+@RequiredArgsConstructor
 public class CoordController {
 
     private final CoordService coordService;
+
     private static final Logger logger = LogManager.getLogger(CoordController.class);
     @GetMapping("/allCoord")
     public List<Coord> getAllCoord(){

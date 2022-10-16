@@ -39,7 +39,12 @@ public class CoordServiceImpl implements CoordService {
         logger.info("Get Weather Service Data......");
         String url = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon +"&appid=892a3cc7296959eb9b022b411d643960&units=metric";
         logger.info("Get Weather Service URL: " + url);
-        Root response = restTemplate.getForObject(url, Root.class);
+        Root response = new Root();
+        try {
+            response = restTemplate.getForObject(url, Root.class);
+        }catch(Exception exception){
+            logger.error("API Call Error: " + exception);
+        }
         logger.info("Received Weather Service Response: " + response);
         Main main = response.getMain();
         main.setLat(lat);
