@@ -10,6 +10,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.boot.configurationprocessor.json.JSONException;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,7 +33,8 @@ public class CoordController {
     public List<Coord> getAllCoord(){
         return coordService.getAllCoord();
     }
-    
+
+    @Transactional
     @GetMapping("/getWeatherData")
     @Scheduled(fixedRate = 3000)
     public void getWeatherdata() throws JSONException {

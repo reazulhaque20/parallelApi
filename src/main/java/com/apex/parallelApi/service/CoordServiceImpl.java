@@ -44,6 +44,7 @@ public class CoordServiceImpl implements CoordService {
             response = restTemplate.getForObject(url, Root.class);
         }catch(Exception exception){
             logger.error("API Call Error: " + exception);
+            dataLoader(lat, lon);
         }
         logger.info("Received Weather Service Response: " + response);
         Main main = response.getMain();
@@ -65,5 +66,16 @@ public class CoordServiceImpl implements CoordService {
         wind.setLon(lon);
         windRepo.save(wind);
         return CompletableFuture.completedFuture("");
+    }
+
+    private void dataLoader(double lat, double lon){
+        List<Main> mains = mainRepo.finByLatLon(lat, lon);
+        mainRepo.saveAll(mains);
+        List<Weather> weathers = weatherRepo.finByLatLon(lat, lon);
+        weatherRepo.saveAll(weathers);
+        List<Sys> sysList = sysRepo.finByLatLon(lat, lon);
+        sysRepo.saveAll(sysList);
+        List<Wind> winds = windRepo.finByLatLon(lat, lon);
+        windRepo.saveAll(winds);
     }
 }
