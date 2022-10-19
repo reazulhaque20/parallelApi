@@ -69,13 +69,39 @@ public class CoordServiceImpl implements CoordService {
     }
 
     private void dataLoader(double lat, double lon){
-        List<Main> mains = mainRepo.finByLatLon(lat, lon);
-        mainRepo.saveAll(mains);
-        List<Weather> weathers = weatherRepo.finByLatLon(lat, lon);
-        weatherRepo.saveAll(weathers);
-        List<Sys> sysList = sysRepo.finByLatLon(lat, lon);
-        sysRepo.saveAll(sysList);
-        List<Wind> winds = windRepo.finByLatLon(lat, lon);
-        windRepo.saveAll(winds);
+        Main main = new Main();
+        main.setTemp(31.18);
+        main.setFeels_like(33.13);
+        main.setTemp_min(31.18);
+        main.setTemp_max(31.18);
+        main.setPressure(1009);
+        main.setHumidity(51);
+        main.setLat(lat);
+        main.setLon(lon);
+        mainRepo.save(main);
+
+        Weather weather = new Weather();
+        weather.setMain("Clouds");
+        weather.setDescription("scattered clouds");
+        weather.setIcon("03d");
+        weather.setLat(lat);
+        weather.setLon(lon);
+        weatherRepo.save(weather);
+
+        Sys sys = new Sys();
+        sys.setType(0);
+        sys.setCountry("BD");
+        sys.setSunrise(1665878675);
+        sys.setSunset(1665920284);
+        sys.setLat(lat);
+        sys.setLon(lon);
+        sysRepo.save(sys);
+
+        Wind wind = new Wind();
+        wind.setSpeed(2.02);
+        wind.setDeg(331);
+        wind.setLat(lat);
+        wind.setLon(lon);
+        windRepo.save(wind);
     }
 }
