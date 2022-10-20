@@ -36,7 +36,7 @@ public class CoordController {
 
     @Transactional
     @GetMapping("/getWeatherData")
-    @Scheduled(fixedRate = 3000)
+    @Scheduled(fixedRate = 4000)
     public void getWeatherdata() throws JSONException {
         List<Coord> coordList = coordService.getAllCoord();
         List<Root> rootList = new ArrayList<>();
