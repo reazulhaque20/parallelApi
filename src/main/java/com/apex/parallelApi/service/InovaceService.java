@@ -22,7 +22,7 @@ public class InovaceService {
 
     private RestTemplate restTemplate;
     private static final Logger log = LogManager.getLogger(InovaceService.class);
-    
+
     @Async
     public CompletableFuture<Map<String, String>> getDeviceLog() {
         final String serviceUrl = "http://192.168.17.50/api/v1/logs/";
