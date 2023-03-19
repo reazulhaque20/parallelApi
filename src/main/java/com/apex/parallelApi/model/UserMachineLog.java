@@ -1,10 +1,18 @@
 package com.apex.parallelApi.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "USER_MACHINE_LOGS")
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserMachineLog {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_MACHINE_LOGS_id_gen")
@@ -23,6 +31,15 @@ public class UserMachineLog {
 
     @Column(name = "MC_TYPE", nullable = false, length = 10)
     private String mcType;
+
+    @Column(name = "DEVICE_IDENTIFIER")
+    private Long deviceIdentifier;
+
+    @Column(name = "LOCATION")
+    private String location;
+
+    @Column(name = "STATUS")
+    private String status;
 
     public Long getId() {
         return id;
@@ -64,4 +81,27 @@ public class UserMachineLog {
         this.mcType = mcType;
     }
 
+    public Long getDeviceIdentifier() {
+        return deviceIdentifier;
+    }
+
+    public void setDeviceIdentifier(Long deviceIdentifier) {
+        this.deviceIdentifier = deviceIdentifier;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
